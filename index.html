@@ -273,9 +273,9 @@
   </div>
 
   <script>
-    const SUPABASE_URL =
-      "https://lykissenddvybxdgxnyw.supabase.co";
-
+   const SUPABASE_KEY =
+  "sb_publishable_JNfFs5n8a_t92Sz4KtBXkQ_r6Cmtp-m";
+    
     function escapeHtml(value) {
       return String(value ?? "")
         .replaceAll("&", "&amp;")
@@ -415,10 +415,11 @@
             {
               method: "POST",
 
-              headers: {
-                "Content-Type":
-                  "application/json"
-              },
+             headers: {
+  "Content-Type": "application/json",
+  "apikey": SUPABASE_KEY,
+  "Authorization": `Bearer ${SUPABASE_KEY}`
+},
 
               body: JSON.stringify({
                 p_public_token: token
