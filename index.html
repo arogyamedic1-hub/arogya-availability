@@ -168,8 +168,23 @@
       border-radius: 17px;
       background: #f7faf8;
       color: #344054;
+      text-align: center;
+    }
+
+    .message-english {
       font-size: 15px;
-      line-height: 1.6;
+      line-height: 1.55;
+      font-weight: 500;
+    }
+
+    .message-sinhala {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #e4ece8;
+      font-family: "Noto Sans Sinhala", "Iskoola Pota", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.75;
+      font-weight: 500;
     }
 
     .updated {
@@ -539,11 +554,35 @@ const SUPABASE_KEY =
 
         const messageSection =
           message
-            ? `
-              <div class="message-card">
-                ${escapeHtml(message)}
-              </div>
-            `
+            ? (() => {
+                const messageLines = message
+                  .split(/\r?\n/)
+                  .map((line) => line.trim())
+                  .filter(Boolean);
+
+                const englishMessage = messageLines[0] || "";
+                const sinhalaMessage =
+                  messageLines.length > 1
+                    ? messageLines.slice(1).join(" ")
+                    : "";
+
+                return `
+                  <div class="message-card">
+                    <div class="message-english">
+                      ${escapeHtml(englishMessage)}
+                    </div>
+                    ${
+                      sinhalaMessage
+                        ? `
+                          <div class="message-sinhala" lang="si">
+                            ${escapeHtml(sinhalaMessage)}
+                          </div>
+                        `
+                        : ""
+                    }
+                  </div>
+                `;
+              })()
             : "";
 
         document.getElementById(
